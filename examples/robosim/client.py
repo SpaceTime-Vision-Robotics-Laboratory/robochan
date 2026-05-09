@@ -48,6 +48,9 @@ def actions_fn(env: RobosimEnv, actions: list[Act]) -> bool:
         if action.name == "GET_STATE":
             msgs.append({"cmd": "sim_get_state"})
 
+        if action.name == "RACE_START":
+            msgs.append({"cmd": "race_start"})
+
     resps = env.send_recv_packets(msgs)
     had_errors = False
     for resp in resps:
@@ -59,7 +62,7 @@ def actions_fn(env: RobosimEnv, actions: list[Act]) -> bool:
         if {"robots", "state"}.issubset(resp.keys()):
             with open(pth := CWD / "state.json", "w") as fp:
                 logger.log_every_s(f"Saved state at: '{pth}'")
-                json.dump(resp, fp)
+                json.dump(resp, fp, indent=2)
     return not had_errors
 
 def keyboard_fn(pressed: set[Key]) -> list[Act]:
@@ -80,6 +83,8 @@ def keyboard_fn(pressed: set[Key]) -> list[Act]:
             logger.error("Cannot load state before saving one.")
         else:
             acts.append(Act("LOAD_STATE"))
+    elif Key.o in pressed:
+        acts.append(Act("RACE_START"))
 
     move_vec = np.zeros((6,), dtype="float32")
     move_vec[0] += (Key.a in pressed) - (Key.d in pressed)                # left/right (x)
@@ -98,7 +103,7 @@ def get_args() -> Namespace:
     """cli args"""
     parser = ArgumentParser()
     parser.add_argument("host")
-    parser.add_argument("--port", "-p", type=int)
+    parser.add_argument("--port", "-p", type=int, default=42069)
     args = parser.parse_args()
     return args
 
@@ -107,7 +112,7 @@ def main(args: Namespace):
     env = RobosimEnv(args.host, args.port)
     data_channel = DataChannel(supported_types=env.get_modalities(),
                                eq_fn=lambda a, b: a["fpv_frame_id"] == b["fpv_frame_id"])
-    action_names = ["MOVE", "DISCONNECT", "RESET", "LOAD_STATE", "GET_STATE"]
+    action_names = ["MOVE", "DISCONNECT", "RESET", "LOAD_STATE", "GET_STATE", "RACE_START"]
     actions_queue = ActionsQueue(action_names=action_names)
     robot = Robot(env, data_channel, actions_queue, actions_fn)
 

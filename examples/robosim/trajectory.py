@@ -3,19 +3,31 @@
 import time
 from datetime import datetime
 import numpy as np
+from numpy.typing import NDArray as ND
+from spatialmath.base import isR, vexa, trlog, tr2rpy
 from loggez import make_logger
-from robosim.utils import Point6D, Pose4x4, fmt, pose_to_trans_euler, relative_velocity_from_poses # noqa # pylint: disable=all
 
-from robobase import DataChannel, ActionsQueue
-from robobase.utils import freq_barrier
-from robobase.controller import BaseController
-from roboimpl.controllers import DisplayerBackend, Key
+from robobase import DataChannel, ActionsQueue # pylint: disable=import-error
+from robobase.utils import freq_barrier # pylint: disable=import-error
+from robobase.controller import BaseController # pylint: disable=import-error
+from roboimpl.controllers import DisplayerBackend, Key # pylint: disable=import-error
 
 from robosim_env import RobosimEnv
+
+Point3D = ND["3,"]
+Point6D = ND["6,"]
+Pose4x4 = ND["4,4"]
+Rot3x3 = ND["3,3"]
 
 logger = make_logger("CLIENT", exists_ok=True)
 np.set_printoptions(precision=3, linewidth=120)
 FREQ = 10
+
+# utils
+
+def fmt(arr: np.ndarray, precision: int=2) -> str:
+    """formats a numpy array for logging as tuple"""
+    return "(" + ", ".join(f"{float(x):.{precision}g}" for x in arr) + ")"
 
 def _get_maxes(state: dict) -> Point6D:
     try:
@@ -28,9 +40,33 @@ def _get_maxes(state: dict) -> Point6D:
         maxes = np.array(state["robot"]["max_velocities"], "float32")
     elif uav_type == "UAVLevel2":
         maxes = np.array(state["robot"]["max_accelerations"], "float32")
+    else:
+        raise ValueError(uav_type)
     return maxes
 
-# network
+# math
+
+def renormalize_rotation_matrix(rot: Rot3x3, tol: float=1e10) -> Rot3x3:
+    """uses SVD to renormalize a rotation matrix if it drifted too much (i.e. during trajectory updates)"""
+    if isR(rot, tol=tol):
+        return rot
+    logger.debug(f"Renormalizing R as err is {np.linalg.norm((rot @ rot.T) - np.eye(3)):.7f}")
+    U, _, Vt = np.linalg.svd(rot)
+    D = np.diag([1, 1, np.linalg.det(U @ Vt)]) # force det=1 (not -1)
+    new_rot = U @ D @ Vt
+    assert isR(new_rot, tol=1e10), new_rot
+    return new_rot
+
+def relative_velocity_from_poses(pose1: Pose4x4, pose2: Pose4x4) -> Point6D:
+    """returns a relative velocity (v, w) from two poses. Used to (linearly) compute trajectories. Aka twist"""
+    T_rel = np.linalg.inv(pose1) @ pose2 # compute relative pose (in body frame!!)
+    T_rel[0:3, 0:3] = renormalize_rotation_matrix(T_rel[0:3, 0:3], tol=1e10)
+    velocity_rel = vexa(trlog(T_rel, tol=1e10)) # relative velocity for linear interpolation (tangent space)
+    return velocity_rel
+
+def pose_to_trans_euler(pose: Pose4x4) -> np.ndarray:
+    """converts a pose to a 6DoF translation + euler vector, mostly for printing reasons (4, 4) -> (6, )"""
+    return np.array([*pose[0:3, 3], *tr2rpy(pose)], dtype="float32")
 
 # controllers logic
 
@@ -142,10 +178,10 @@ class TrajectoryController(BaseController):
                 self.env.send_recv_packet({"cmd": "mission_clear_via_points"})
 
             if Key.u in pressed:
-                state = self.env.send_recv_packet({"cmd": "robot_get_state"})
+                state = self.env.send_recv_packet({"cmd": "robot_get_state", "robot_id": self.env.robot_id})
                 msg = self.env.send_recv_packet({"cmd": "mission_get_state"})
-                if len(via_points := msg["via_points"]) == 0:
-                    logger.error("No via points")
+                if "error" in msg or "via_points" in msg and len(via_points := msg["via_points"]) == 0:
+                    logger.error(msg)
                     continue
                 if msg["mission_state"] == "running":
                     logger.error(f"mission is already running: {msg}")
