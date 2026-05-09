@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """A simple TCP client to connect to the simulator server and interact with the robot/UAV"""
+# pylint: disable=duplicate-code, import-error, wrong-import-order
 import time
 from datetime import datetime
 import numpy as np
@@ -7,10 +8,10 @@ from numpy.typing import NDArray as ND
 from spatialmath.base import isR, vexa, trlog, tr2rpy
 from loggez import make_logger
 
-from robobase import DataChannel, ActionsQueue # pylint: disable=import-error
-from robobase.utils import freq_barrier # pylint: disable=import-error
-from robobase.controller import BaseController # pylint: disable=import-error
-from roboimpl.controllers import DisplayerBackend, Key # pylint: disable=import-error
+from robobase import DataChannel, ActionsQueue
+from robobase.utils import freq_barrier
+from robobase.controller import BaseController
+from roboimpl.controllers import DisplayerBackend, Key
 
 from robosim_env import RobosimEnv
 

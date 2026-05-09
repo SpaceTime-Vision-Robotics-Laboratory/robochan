@@ -1,5 +1,5 @@
 """wrapper for thread-safe client->server conn"""
-# pylint: disable=duplicate-code
+# pylint: disable=duplicate-code, import-error
 from __future__ import annotations
 import os
 import socket
