@@ -12,7 +12,7 @@ def get_project_root() -> Path:
 
 # Create a logger. For the logs dir we have a few options: ROBOBASE_STORE_LOGS must be >=1 otherwise no logs.
 # For the file, if the env. var ROBOBASE_LOGS_DIR is set, then it's used, otherwise defaults to proj_root/logs/now_iso
-logs_dir = os.getenv("ROBOBASE_LOGS_DIR", get_project_root() / "logs" / datetime.now().isoformat()[0:-7])
+logs_dir = os.getenv("ROBOBASE_LOGS_DIR", get_project_root() / "logs" / datetime.now().strftime("%Y-%m-%dT%H-%M-%S"))
 log_file = f"{logs_dir}/ROBOBASE.txt" if os.getenv("ROBOBASE_STORE_LOGS", "1") in ("1", "2") else None
 logger = make_logger("ROBOBASE", log_file=log_file)
 
