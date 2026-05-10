@@ -2,7 +2,7 @@
 
 <font color="red"> NOTE: VIBE CODED </font>
 
-Interactive timeline visualization for robobase `DataChannel` and `ActionsQueue` logs.
+Interactive timeline visualization for robochan `DataChannel` and `ActionsQueue` logs.
 
 ## Usage
 
@@ -11,7 +11,7 @@ python viz.py -d /path/to/logs/2026-02-14T12:43:05
 # logsviz running at http://localhost:5555
 ```
 
-The `-d` directory should be a session folder containing `DataChannel/` and/or `ActionsQueue/` subdirectories with `.npy` files (produced by `DataStorer` when `ROBOBASE_STORE_LOGS=2`).
+The `-d` directory should be a session folder containing `DataChannel/` and/or `ActionsQueue/` subdirectories with `.npy` files (produced by `DataStorer` when `ROBOCHAN_STORE_LOGS=2`).
 
 ### Options
 

@@ -4,7 +4,7 @@ from functools import partial
 import gymnasium as gym
 import numpy as np
 from loggez import make_logger
-from robobase import Robot, DataChannel, ActionsQueue, Action
+from robochan import Robot, DataChannel, ActionsQueue, Action
 from roboimpl.controllers import ScreenDisplayer, Key, KeyboardController
 from roboimpl.envs.gym import GymEnv, GymState, gym_actions_fn, GYM_ACTION_NAMES
 

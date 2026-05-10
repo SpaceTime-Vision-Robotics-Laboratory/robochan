@@ -3,7 +3,7 @@ set -e
 export CWD=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 export PROJ_ROOT=$CWD/../../../
 
-export ROBOBASE_LOGLEVEL=1
+export ROBOCHAN_LOGLEVEL=1
 export ROBOIMPL_LOGLEVEL=1
 
 seed=$(shuf -i 1-1000 -n 1)

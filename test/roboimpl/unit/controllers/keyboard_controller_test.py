@@ -1,4 +1,4 @@
-from robobase import ActionsQueue, DataChannel, Action as Act
+from robochan import ActionsQueue, DataChannel, Action as Act
 from roboimpl.controllers import KeyboardController, Key
 import pytest
 

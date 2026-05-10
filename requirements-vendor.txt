@@ -1,5 +1,5 @@
 # extra requirements to run various data producers, cosumers or interact with specific drones
--r requirements-base.txt
+-r requirements-core.txt
 # drones, robots, mocks (video), etc.
 parrot-olympe==7.7.5
 gymnasium==1.2.3
@@ -8,5 +8,5 @@ opencv-python>=4.12.0.88 # use opencv-python-headless for CI (if ever)
 torch>=2.8.0 # use torch[cpu] for CI (if ever)
 ultralytics==8.3.229
 video-representations-extractor>=1.17.1
-pysdl2-dll==2.32.0
-pysdl2==0.9.17
+pysdl2-dll==2.32.0 # for screen displayer and keyboard controller (if not installed, you can use tkinter)
+pysdl2==0.9.17 # for screen displayer and keyboard controller (if not installed, you can use tkinter)

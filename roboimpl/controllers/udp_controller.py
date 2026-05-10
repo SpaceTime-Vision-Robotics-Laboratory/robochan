@@ -3,7 +3,7 @@ from datetime import datetime
 import socket
 from overrides import overrides
 
-from robobase import DataProducer, BaseController, ActionsQueue, Action
+from robochan import DataProducer, BaseController, ActionsQueue, Action
 from roboimpl.utils import logger
 
 HOST = "127.0.0.1"

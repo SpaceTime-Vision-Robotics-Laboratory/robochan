@@ -5,7 +5,7 @@ from typing import Callable
 from overrides import overrides
 import numpy as np
 
-from robobase import DataChannel, DataItem, BaseController, ActionsQueue
+from robochan import DataChannel, DataItem, BaseController, ActionsQueue
 from roboimpl.utils import image_resize, logger, CircularBuffer
 
 from .screen_displayer_utils import DisplayerState, DisplayerBackend

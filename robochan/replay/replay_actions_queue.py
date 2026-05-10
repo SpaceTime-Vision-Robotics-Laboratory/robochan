@@ -1,8 +1,8 @@
 """replay_actions_queue.py -- Extends an ActionsQueue with replay abilities from an older run"""
 from datetime import datetime
 from pathlib import Path
-from robobase import ActionsQueue, Action
-from robobase.utils import load_npz_as_dict
+from robochan import ActionsQueue, Action
+from robochan.utils import load_npz_as_dict
 
 class ReplayActionsQueue(ActionsQueue):
     """Extends an ActionsQueue with replay abilities from an older run"""

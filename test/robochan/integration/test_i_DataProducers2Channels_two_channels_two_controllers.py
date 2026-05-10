@@ -4,9 +4,9 @@ from datetime import datetime
 import time
 import numpy as np
 
-from robobase import (ActionsQueue, DataChannel, DataItem, ThreadGroup, DataProducers2Channels, Actions2Environment,
+from robochan import (ActionsQueue, DataChannel, DataItem, ThreadGroup, DataProducers2Channels, Actions2Environment,
                       LambdaDataProducer, Controller, Action, Environment, RawDataProducer)
-from robobase.utils import freq_barrier
+from robochan.utils import freq_barrier
 
 N_FRAMES = 60
 N1 = 0

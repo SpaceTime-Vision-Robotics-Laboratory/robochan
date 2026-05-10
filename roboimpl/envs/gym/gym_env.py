@@ -5,8 +5,8 @@ from dataclasses import dataclass
 from overrides import overrides
 import gymnasium as gym # pylint: disable=import-error
 from gymnasium.core import ObsType
-from robobase import Environment, Action
-from robobase.utils import wait_and_clear, logger
+from robochan import Environment, Action
+from robochan.utils import wait_and_clear, logger
 
 MAX_STEPS = 1000000
 INITIAL_SEED = 42

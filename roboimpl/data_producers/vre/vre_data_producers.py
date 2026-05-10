@@ -5,7 +5,7 @@ from vre import MemoryData, Representation, ReprOut # pylint: disable=all
 from vre.representations.mixins import LearnedRepresentationMixin # pylint: disable=all
 from vre_repository import get_vre_repository # pylint: disable=all
 
-from robobase import DataProducer, DataItem
+from robochan import DataProducer, DataItem
 from roboimpl.utils import logger
 
 class VREDataProducer(DataProducer):

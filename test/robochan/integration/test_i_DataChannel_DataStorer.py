@@ -1,10 +1,10 @@
 from pathlib import Path
-from robobase import DataChannel
-from robobase.utils import DataStorer, logger
+from robochan import DataChannel
+from robochan.utils import DataStorer, logger
 import pytest
 
 def test_DataChannel_data_storer(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("ROBOBASE_STORE_LOGS", "2")
+    monkeypatch.setenv("ROBOCHAN_STORE_LOGS", "2")
     logger.get_file_handler().file_path = tmp_path / "logs.txt"
     channel = DataChannel(supported_types=["rgb"], eq_fn=lambda a, b: a==b)
     channel.put({"rgb": 0})

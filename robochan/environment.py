@@ -1,7 +1,7 @@
 """environment.py - Script defining an interface for environments where a robot exists in"""
 from abc import ABC, abstractmethod
 import threading
-from robobase.utils import parsed_str_type, logger
+from robochan.utils import parsed_str_type, logger
 
 class Environment(ABC):
     """Generic environment for robots."""

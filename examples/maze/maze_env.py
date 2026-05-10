@@ -7,9 +7,9 @@ from loggez import make_logger
 import numpy as np
 from overrides import overrides
 
-from robobase import Environment
-from robobase.utils import wait_and_clear
-from robobase.utils import freq_barrier
+from robochan import Environment
+from robochan.utils import wait_and_clear
+from robochan.utils import freq_barrier
 
 EMPTY = 0
 WALL = 1

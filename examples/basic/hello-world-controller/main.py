@@ -3,8 +3,8 @@
 import threading
 from copy import deepcopy
 from datetime import datetime
-from robobase import Robot, Environment, DataChannel, ActionsQueue, DataItem, Action
-from robobase.utils import wait_and_clear
+from robochan import Robot, Environment, DataChannel, ActionsQueue, DataItem, Action
+from robochan.utils import wait_and_clear
 
 TARGET = "helloworld"
 

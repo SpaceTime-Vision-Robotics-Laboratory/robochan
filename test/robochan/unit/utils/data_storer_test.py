@@ -1,7 +1,7 @@
 from pathlib import Path
 from datetime import datetime
 from queue import Empty
-from robobase.utils import DataStorer
+from robochan.utils import DataStorer
 import numpy as np
 import pytest
 

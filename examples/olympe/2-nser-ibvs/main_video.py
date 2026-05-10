@@ -15,7 +15,7 @@ from loggez import loggez_logger as logger
 from detection.mask_splitter_data_producer import MaskSplitterDataProducer
 from auto_follow_logs_frame_reader import AutoFollowLogsFrameReader
 
-from robobase import Robot, DataChannel, ActionsQueue, DataItem, Action as Act
+from robochan import Robot, DataChannel, ActionsQueue, DataItem, Action as Act
 from roboimpl.data_producers.yolo import YOLODataProducer
 from roboimpl.envs.video import VideoPlayerEnv, video_actions_fn, VIDEO_ACTION_NAMES
 from roboimpl.controllers import ScreenDisplayer, Key, KeyboardController

@@ -3,12 +3,12 @@ from pathlib import Path
 from overrides import overrides
 import numpy as np
 
-from robobase.data_producer import DataProducer
-from robobase.types import DataItem
-from robobase.utils import logger, load_npz_as_dict
+from robochan.data_producer import DataProducer
+from robochan.types import DataItem
+from robochan.utils import logger, load_npz_as_dict
 
 class ReplayDataProducer(DataProducer):
-    """Acts like a RawDataProducer, but operates on the logs/ of ROBOBASE_STORE_LOGS=2 (or similar) from DataChannel"""
+    """Acts like a RawDataProducer, but operates on the logs/ of ROBOCHAN_STORE_LOGS=2 (or similar) from DataChannel"""
     def __init__(self, data_dir: Path, prefix: str | None = None, loop: bool=True):
         self.data_dir = Path(data_dir)
         self.loop = loop

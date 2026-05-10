@@ -2,7 +2,7 @@
 """Usage ./main.py [device_id]. Space for pause, Esc for exit."""
 import sys
 
-from robobase import Environment, Robot, DataChannel, ActionsQueue, Action
+from robochan import Environment, Robot, DataChannel, ActionsQueue, Action
 from roboimpl.controllers import ScreenDisplayer, Key, KeyboardController
 from roboimpl.utils import logger
 

@@ -8,4 +8,6 @@ __pycache__
 .vscode/
 Robobase-vs-Dronebase.md
 drone-ioact-analysis.md
+dist/
+robochan.egg-info
 
