@@ -7,7 +7,7 @@ import json
 import numpy as np
 from loggez import make_logger
 
-from robobase import Robot, DataChannel, ActionsQueue, Action as Act
+from robochan import Robot, DataChannel, ActionsQueue, Action as Act
 from roboimpl.controllers import ScreenDisplayer, Key
 from roboimpl.controllers.keyboard_controller import KeyboardController
 

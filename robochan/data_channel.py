@@ -6,9 +6,9 @@ from pprint import pformat
 import threading
 import numpy as np
 
-from robobase.types import DataItem, DataEqFn
-from robobase.utils import logger
-from robobase.utils.data_storer import DataStorer
+from robochan.types import DataItem, DataEqFn
+from robochan.utils import logger
+from robochan.utils.data_storer import DataStorer
 
 SLEEP_INTERVAL = 0.01
 

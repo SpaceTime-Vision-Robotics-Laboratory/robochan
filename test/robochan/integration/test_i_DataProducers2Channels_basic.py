@@ -1,7 +1,7 @@
 import numpy as np
 import time
-from robobase import DataChannel, DataProducer
-from robobase.data_producers2channels import DataProducers2Channels
+from robochan import DataChannel, DataProducer
+from robochan.data_producers2channels import DataProducers2Channels
 
 def test_i_DataProducers2Channels_basic():
     class RGB(DataProducer):

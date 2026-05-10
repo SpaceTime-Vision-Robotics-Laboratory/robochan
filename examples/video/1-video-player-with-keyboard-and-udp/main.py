@@ -5,7 +5,7 @@ from __future__ import annotations
 from argparse import ArgumentParser, Namespace
 from vre_video import VREVideo
 
-from robobase import ActionsQueue, DataChannel, Robot, Action as Act
+from robochan import ActionsQueue, DataChannel, Robot, Action as Act
 from roboimpl.envs.video import VideoPlayerEnv, video_actions_fn, VIDEO_ACTION_NAMES
 from roboimpl.controllers import ScreenDisplayer, UDPController, Key, KeyboardController
 

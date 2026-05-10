@@ -9,7 +9,7 @@ from argparse import ArgumentParser, Namespace
 import random
 from loggez import make_logger
 
-from robobase import Robot, DataChannel, ActionsQueue, DataItem, Action
+from robochan import Robot, DataChannel, ActionsQueue, DataItem, Action
 
 sys.path.append(Path(__file__).parent.__str__())
 from examples.maze.maze_env import MazeEnv, PointIJ # pylint: disable=all

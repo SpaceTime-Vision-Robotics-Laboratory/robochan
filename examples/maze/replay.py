@@ -2,9 +2,9 @@
 """replay.py - Example on how to use the replay functionalities (ReplayDataProducer, ActionsQueue [TODO]) of robobase"""
 # TODO: make a readme or something.
 import sys
-from robobase import Robot, DataChannel, ActionsQueue
-from robobase.replay import ReplayDataProducer
-from robobase.utils import logger
+from robochan import Robot, DataChannel, ActionsQueue
+from robochan.replay import ReplayDataProducer
+from robochan.utils import logger
 
 from main import ( # pylint: disable=all
     MAZE_MAX_TRIES, MAZE_WALLS_PROB, MAZE_SIZE, MazeEnv, Strategy1, actions_fn, random_controller_fn)

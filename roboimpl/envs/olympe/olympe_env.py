@@ -9,8 +9,8 @@ from olympe.video.pdraw import PdrawState
 from olympe.messages import gimbal
 from olympe.messages.ardrone3.PilotingState import FlyingStateChanged
 
-from robobase import Environment
-from robobase.utils import wait_and_clear
+from robochan import Environment
+from robochan.utils import wait_and_clear
 from roboimpl.utils import logger, image_resize
 
 class OlympeEnv(Environment):

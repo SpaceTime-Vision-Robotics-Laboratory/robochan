@@ -19,8 +19,8 @@ python main.py video.mp4 [--yolo_weight_path model_yolo.ckpt] [--vre_config_path
 - `.` - skips one frame ahead
 - `,` - skips on frame behind
 
-## Webcam example via ffmpeg + robobase:
+## Webcam example via ffmpeg + robochan:
 
 ```bash
-ffmpeg -i https://w3.webcamromania.ro/busteni/index.m3u8 -f rawvideo -pix_fmt rgb24 - | CUDA_VISIBLE_DEVICES=0 VRE_VIDEO_LOGLEVEL=2 ROBOBASE_LOGLEVEL=2 ROBOIMPL_LOGLEVEL=2 ./main.py - --yolo_weights_path yolo11s.pt --yolo_threshold 0.1 --frame_resolution 800 1280 --fps 30
+ffmpeg -i https://w3.webcamromania.ro/busteni/index.m3u8 -f rawvideo -pix_fmt rgb24 - | CUDA_VISIBLE_DEVICES=0 VRE_VIDEO_LOGLEVEL=2 ROBOCHAN_LOGLEVEL=2 ROBOIMPL_LOGLEVEL=2 ./main.py - --yolo_weights_path yolo11s.pt --yolo_threshold 0.1 --frame_resolution 800 1280 --fps 30
 ```

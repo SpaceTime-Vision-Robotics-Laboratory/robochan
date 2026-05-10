@@ -1,5 +1,5 @@
 import pytest
-from robobase.data_channel import DataChannel
+from robochan.data_channel import DataChannel
 
 def test_DataChannel_ctor():
     with pytest.raises(AssertionError):

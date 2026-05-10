@@ -7,9 +7,9 @@ from copy import deepcopy
 from datetime import datetime
 import pytest
 import numpy as np
-from robobase import Robot, Environment, DataChannel, ActionsQueue, Action, DataItem
-from robobase.replay import ReplayDataProducer, ReplayActionsQueue
-from robobase.utils import wait_and_clear, DataStorer, logger
+from robochan import Robot, Environment, DataChannel, ActionsQueue, Action, DataItem
+from robochan.replay import ReplayDataProducer, ReplayActionsQueue
+from robochan.utils import wait_and_clear, DataStorer, logger
 
 TARGET = "helloworld"
 
@@ -37,7 +37,7 @@ class BasicEnv(Environment):
 
 def test_i_Robot_replay_from_logs(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     env = BasicEnv()
-    monkeypatch.setenv("ROBOBASE_STORE_LOGS", "2")
+    monkeypatch.setenv("ROBOCHAN_STORE_LOGS", "2")
     logger.get_file_handler().file_path = tmp_path / "logs.txt"
     shutil.rmtree(tmp_path, ignore_errors=True)
     data_channel = DataChannel(supported_types=["ts", "state"], eq_fn=lambda a, b: a["state"] == b["state"])
@@ -71,7 +71,7 @@ def test_i_Robot_replay_from_logs_ReplayDataProducer_ReplayActionsQueue(tmp_path
                                                                         monkeypatch: pytest.MonkeyPatch):
     """this test is basically the same as test_i_Robot_replay_from_logs but via the Replay classes"""
     env = BasicEnv()
-    monkeypatch.setenv("ROBOBASE_STORE_LOGS", "2")
+    monkeypatch.setenv("ROBOCHAN_STORE_LOGS", "2")
     logger.get_file_handler().file_path = tmp_path / "logs.txt"
     shutil.rmtree(tmp_path, ignore_errors=True)
     data_channel = DataChannel(supported_types=["ts", "state"], eq_fn=lambda a, b: a["state"] == b["state"])
@@ -104,7 +104,7 @@ def test_i_Robot_replay_from_logs_ReplayDataProducer_ReplayActionsQueue(tmp_path
 def test_i_Robot_replay_from_logs_offline_exception(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     """this mostly makes sure that we cannot push() in ReplaActionsQueue mode='offline'"""
     env = BasicEnv()
-    monkeypatch.setenv("ROBOBASE_STORE_LOGS", "2")
+    monkeypatch.setenv("ROBOCHAN_STORE_LOGS", "2")
     logger.get_file_handler().file_path = tmp_path / "logs.txt"
     shutil.rmtree(tmp_path, ignore_errors=True)
     data_channel = DataChannel(supported_types=["ts", "state"], eq_fn=lambda a, b: a["state"] == b["state"])
@@ -129,7 +129,7 @@ def test_i_Robot_replay_from_logs_offline_exception(tmp_path: Path, monkeypatch:
 
     # just read the data that was created via the data channel
     print("="*80)
-    monkeypatch.setenv("ROBOBASE_STORE_LOGS", "0")
+    monkeypatch.setenv("ROBOCHAN_STORE_LOGS", "0")
     replay_env = BasicEnv()
     print(f"Start state: '{''.join(replay_env._state)}'") # pylint: disable=protected-access
     replay_data_channel = DataChannel(supported_types=["ts", "state", "replay_ts", "replay_state"],
@@ -149,7 +149,7 @@ def test_i_Robot_replay_from_logs_offline_exception(tmp_path: Path, monkeypatch:
 
 def test_i_Robot_replay_from_logs_online_compare(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     env = BasicEnv()
-    monkeypatch.setenv("ROBOBASE_STORE_LOGS", "2")
+    monkeypatch.setenv("ROBOCHAN_STORE_LOGS", "2")
     logger.get_file_handler().file_path = tmp_path / "logs.txt"
     shutil.rmtree(tmp_path, ignore_errors=True)
     data_channel = DataChannel(supported_types=["ts", "state"], eq_fn=lambda a, b: a["state"] == b["state"])
@@ -174,7 +174,7 @@ def test_i_Robot_replay_from_logs_online_compare(tmp_path: Path, monkeypatch: py
 
     # just read the data that was created via the data channel
     print("="*80)
-    monkeypatch.setenv("ROBOBASE_STORE_LOGS", "0")
+    monkeypatch.setenv("ROBOCHAN_STORE_LOGS", "0")
     replay_env = BasicEnv()
     print(f"Start state: '{''.join(replay_env._state)}'") # pylint: disable=protected-access
     replay_data_channel = DataChannel(supported_types=["ts", "state", "replay_ts", "replay_state"],

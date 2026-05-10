@@ -1,4 +1,4 @@
-# Robobase - Robotics communication library
+# Robochan - Robotics communication library
 
 Robotics communication library between common robotics parts: environment (real or simulated), robot perception modules and robot actuators. The library is built in a generic way, and it can be used for pure Reinforcement Learning applications as well (i.e. we wrap `GymEnv` natively), as well as interacting with real world SDKs (i.e. parrot) or simulated environments (i.e. olympe/unreal).
 
@@ -13,17 +13,17 @@ Robotics communication library between common robotics parts: environment (real 
 ```
 
 The library is built around 2 modules:
-- `robobase` Generic primitives for thread-safe, concurrent and hopefully performant communication
-- `roboimpl` Environment and robots specific implementations (e.g. `olympe-parrot`, `gym`, `ffmpeg` etc.)
+- `robochan` Generic primitives for thread-safe, concurrent and hopefully performant communication
+- `roboimpl` Environment and robots specific implementations (e.g. `olympe-parrot`, `gym`, `ffmpeg`, `robosim` etc.)
 
 ## Installation and testing
 
 ```
 python -m venv .venv # python 3.11 or above
 source .venv/bin/activate
-pip install -r requirements-base.txt # only the `robobase` stuff
-pytest test/robobase
-pip instal -r requirements-extra.txt # all the environments supported in `robobimpl` like olympe from parrot or gym
+pip install -r requirements-core.txt # only the `robochan` stuff
+pytest test/robochan
+pip install -r requirements-vendor.txt # all the environments supported in `robobimpl` like olympe from parrot or gym
 pytest test/roboimpl
 bash test/e2e/run_all.sh
 ```
@@ -73,13 +73,15 @@ if __name__ == "__main__":
 
 We have a few environment variables, moslty that control logging:
 ```bash
-ROBOBASE_LOGLEVEL=0/1/2/3 # 0 = disabled, 1 = info, 2 = debug, 3 = trace
+ROBOCHAN_LOGLEVEL=0/1/2/3 # 0 = disabled, 1 = info, 2 = debug, 3 = trace
 ROBOIMPL_LOGLEVEL=0/1/2/3 # 0 = disabled, 1 = info, 2 = debug, 3 = trace
-ROBOBASE_LOGS_DIR=/path/to/logsdir # if not set, will use the 'robobase_repo_root/logs'
-ROBOBASE_STORE_LOGS=0/1/2 # 0 nothing, 1 txt only, 2 DataStorer (defaults to 1)
+ROBOCHAN_LOGS_DIR=/path/to/logsdir # if not set, will use the 'robochan_repo_root/logs'
+ROBOCHAN_STORE_LOGS=0/1/2 # 0 nothing, 1 txt only, 2 DataStorer (defaults to 1)
+ROBOCHAN_DATA_STORER_QUEUE_SIZE=100 # max items buffered in DataStorer queue before backpressure
 ROBOIMPL_SCREEN_DISPLAYER_BACKEND=tkinter/sdl2 # For ScreenDisplayer controller. Defaults to 'sdl2'
+ROBOIMPL_KEYBOARD_CONTROLLER_FREQ=30 # keyboard poll frequency (Hz) for KeyboardController
 ```
-Notes on `ROBOBASE_STORE_LOGS`: if set to 0, will not store anything on disk, if set to 1, will store only logger (.txt), if set to 2, will also store all the data that passes through the system (i.e. DataChannel and ActionsQueue). This may consume GBs of disk! Use with caution.
+Notes on `ROBOCHAN_STORE_LOGS`: if set to 0, will not store anything on disk, if set to 1, will store only logger (.txt), if set to 2, will also store all the data that passes through the system (i.e. DataChannel and ActionsQueue). This may consume GBs of disk! Use with caution.
 
 Additionally, you can use the [vizualization tool](tools/logsviz/) to see (in real time or after the fact) the interaction between the data and controller's action of your robot. For now, it only supports tracking data to action.
 

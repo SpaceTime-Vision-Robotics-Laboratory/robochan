@@ -1,4 +1,4 @@
-from robobase.utils.thread_group import ThreadGroup, ThreadStatus
+from robochan.utils.thread_group import ThreadGroup, ThreadStatus
 import threading
 import pytest
 import time

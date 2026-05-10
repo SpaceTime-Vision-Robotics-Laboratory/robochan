@@ -1,4 +1,4 @@
-from robobase import Action
+from robochan import Action
 
 def test_Action_ctor():
     action = Action("a", (5, 100))

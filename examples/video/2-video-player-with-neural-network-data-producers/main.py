@@ -8,7 +8,7 @@ import numpy as np
 from vre_video import VREVideo
 from vre_repository.utils import colorize_depth, colorize_semantic_segmentation # pylint: disable=all
 
-from robobase import Robot, ActionsQueue, DataChannel, DataItem, Action as Act
+from robochan import Robot, ActionsQueue, DataChannel, DataItem, Action as Act
 from roboimpl.data_producers.yolo import YOLODataProducer
 from roboimpl.envs.video import VideoPlayerEnv, video_actions_fn, VIDEO_ACTION_NAMES
 from roboimpl.controllers import ScreenDisplayer, Key, KeyboardController

@@ -1,6 +1,6 @@
 """video_actions.py - defines all the supported actions of an video player from our generic ones to the video's"""
 from pathlib import Path
-from robobase import Action
+from robochan import Action
 from roboimpl.utils import logger, image_write
 from .video_player_env import VideoPlayerEnv
 

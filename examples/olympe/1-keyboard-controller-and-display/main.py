@@ -3,7 +3,7 @@
 from argparse import ArgumentParser, Namespace
 from queue import Queue
 
-from robobase import ActionsQueue, DataChannel, Robot, Action as Act
+from robochan import ActionsQueue, DataChannel, Robot, Action as Act
 from roboimpl.envs.olympe import OlympeEnv, olympe_actions_fn, OLYMPE_ACTION_NAMES
 from roboimpl.controllers import ScreenDisplayer, Key, KeyboardController
 

@@ -14,13 +14,13 @@ import numpy as np
 from .utils import logger
 
 SLEEP_INTERVAL = 0.01
-DATA_STORER_QUEUE_MAXSIZE = int(os.getenv("ROBOBASE_DATA_STORER_QUEUE_SIZE", "100"))
+DATA_STORER_QUEUE_MAXSIZE = int(os.getenv("ROBOCHAN_DATA_STORER_QUEUE_SIZE", "100"))
 _INSTANCE: DataStorer | None = None # pylint: disable=invalid-name
 
 class DataStorer(threading.Thread):
     """
     Thread that operates a queue for storing data from other threads i.e. DataChannel or ActionsQueue.
-    Note: you can control the queue size with `ROBOBASE_DATA_STORER_QUEUE_SIZE` env variable. If the queue is full, then
+    Note: you can control the queue size with `ROBOCHAN_DATA_STORER_QUEUE_SIZE` env variable. If the queue is full, then
     the data producer and actions consumers will also be throthled, making the robot lag. So be careful if you have too
     much stuff you want to log to the disk, becuase it may propagate. See issue (!11) as well.
     """
@@ -37,12 +37,12 @@ class DataStorer(threading.Thread):
         global _INSTANCE # pylint: disable=global-statement
         if _INSTANCE is not None and not _INSTANCE.is_closed:
             return _INSTANCE
-        if os.getenv("ROBOBASE_STORE_LOGS", "0") != "2":
+        if os.getenv("ROBOCHAN_STORE_LOGS", "0") != "2":
             return None
         if logger.get_file_handler() is not None:
             logs_dir = Path(logger.get_file_handler().file_path).parent
         else: # can happen in tests -_-
-            logs_dir = Path(os.environ["ROBOBASE_LOGS_DIR"])
+            logs_dir = Path(os.environ["ROBOCHAN_LOGS_DIR"])
 
         logger.info(f"Setting DataStorer at '{logs_dir}'")
         (_INSTANCE := DataStorer(logs_dir)).start()

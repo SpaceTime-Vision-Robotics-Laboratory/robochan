@@ -6,8 +6,8 @@ import numpy as np
 from overrides import overrides
 from vre_video import VREVideo
 
-from robobase import Environment
-from robobase.utils import freq_barrier, wait_and_clear
+from robochan import Environment
+from robochan.utils import freq_barrier, wait_and_clear
 from roboimpl.utils import logger
 
 class VideoPlayerEnv(threading.Thread, Environment):

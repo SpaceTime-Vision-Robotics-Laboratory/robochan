@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 from dataclasses import dataclass
 from overrides import overrides
-from robobase import DataProducer, DataItem
+from robochan import DataProducer, DataItem
 from roboimpl.utils import image_resize
 
 from .mask_splitter_nn import MaskSplitterNet

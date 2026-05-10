@@ -1,10 +1,10 @@
 # Olympe Parrot Environment
 
-robobase environment for Parrot drones via the [Olympe SDK](https://developer.parrot.com/docs/olympe/).
+robochan environment for Parrot drones via the [Olympe SDK](https://developer.parrot.com/docs/olympe/).
 
 ## Overview
 
-`OlympeEnv` connects to a Parrot drone over Wi-Fi, streams video, and exposes drone state (gimbal, flying state, frame metadata) through the robobase `Environment` interface. `olympe_actions_fn` translates robobase `Action` objects into Olympe SDK calls.
+`OlympeEnv` connects to a Parrot drone over Wi-Fi, streams video, and exposes drone state (gimbal, flying state, frame metadata) through the robochan `Environment` interface. `olympe_actions_fn` translates robochan `Action` objects into Olympe SDK calls.
 
 Compatible drones: ANAFI, ANAFI Thermal, ANAFI USA, ANAFI AI.
 
@@ -53,7 +53,7 @@ Set `OLYMPE_LOG_LEVEL` env var to control Olympe SDK log verbosity (e.g. `DEBUG`
 from roboimpl.envs.olympe_parrot import olympe_actions_fn, OLYMPE_SUPPORTED_ACTIONS
 ```
 
-`olympe_actions_fn(env, action)` is the `action_fn` callback for use with `Actions2Environment`. It maps robobase `Action` objects to Olympe SDK calls.
+`olympe_actions_fn(env, action)` is the `action_fn` callback for use with `Actions2Environment`. It maps robochan `Action` objects to Olympe SDK calls.
 
 ### Supported actions
 
@@ -319,7 +319,7 @@ How the Olympe SDK is built, where the code lives on disk, and what happens unde
 ### Layer cake
 
 ```
-olympe_actions_fn / OlympeEnv          <- robobase (our code)
+olympe_actions_fn / OlympeEnv          <- robochan (our code)
          |
     drone.piloting()                   <- Python: olympe.arsdkng.controller (convenience method)
          |

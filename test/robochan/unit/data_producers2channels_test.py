@@ -1,5 +1,5 @@
-from robobase import DataProducer, DataChannel
-from robobase.data_producers2channels import _DataProducerList as DataProducerList, _topo_sort_producers
+from robochan import DataProducer, DataChannel
+from robochan.data_producers2channels import _DataProducerList as DataProducerList, _topo_sort_producers
 import pytest
 
 class FakeDP(DataProducer):

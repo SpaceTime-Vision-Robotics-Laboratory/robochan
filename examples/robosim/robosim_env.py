@@ -11,8 +11,8 @@ import msgpack
 from overrides import overrides
 from loggez import make_logger
 
-from robobase import Environment # pylint: disable=import-error
-from robobase.utils import freq_barrier, wait_and_clear # pylint: disable=import-error
+from robochan import Environment # pylint: disable=import-error
+from robochan.utils import freq_barrier, wait_and_clear # pylint: disable=import-error
 
 SOCKET_TIMEOUT_S = int(os.getenv("SOCKET_TIMEOUT_S", "1000")) # big number so we can breakpoint w/o timeouts.
 FREQ = 60

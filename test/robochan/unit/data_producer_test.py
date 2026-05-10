@@ -1,5 +1,5 @@
 import pytest
-from robobase import LambdaDataProducer, DataItem
+from robochan import LambdaDataProducer, DataItem
 
 def test_LambdaDataProducer_basic():
     def produce_fn(deps: dict[str, DataItem] | None) -> dict[str, DataItem]:

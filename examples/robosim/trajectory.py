@@ -8,9 +8,9 @@ from numpy.typing import NDArray as ND
 from spatialmath.base import isR, vexa, trlog, tr2rpy
 from loggez import make_logger
 
-from robobase import DataChannel, ActionsQueue
-from robobase.utils import freq_barrier
-from robobase.controller import BaseController
+from robochan import DataChannel, ActionsQueue
+from robochan.utils import freq_barrier
+from robochan.controller import BaseController
 from roboimpl.controllers import DisplayerBackend, Key
 
 from robosim_env import RobosimEnv

@@ -16,7 +16,7 @@ from loggez import make_logger
 
 from detection.mask_splitter_data_producer import MaskSplitterDataProducer, IMAGE_SIZE_SPLITTER_NET
 
-from robobase import Robot, ActionsQueue, DataChannel, DataItem, Action as Act, DataProducer
+from robochan import Robot, ActionsQueue, DataChannel, DataItem, Action as Act, DataProducer
 from roboimpl.data_producers.yolo import YOLODataProducer
 from roboimpl.envs.olympe import OlympeEnv, olympe_action_fn, OLYMPE_ACTION_NAMES
 from roboimpl.controllers import ScreenDisplayer, Key, KeyboardController

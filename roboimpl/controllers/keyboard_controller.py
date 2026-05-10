@@ -2,9 +2,9 @@
 import os
 from typing import Callable
 from datetime import datetime
-from robobase import BaseController, Action, ActionsQueue, DataChannel
-from robobase.utils import freq_barrier
-from robobase.controller import INITIAL_DATA_MAX_DURATION_S
+from robochan import BaseController, Action, ActionsQueue, DataChannel
+from robochan.utils import freq_barrier
+from robochan.controller import INITIAL_DATA_MAX_DURATION_S
 from roboimpl.utils import logger
 from roboimpl.controllers.screen_displayer.screen_displayer_utils import DisplayerBackend, Key
 

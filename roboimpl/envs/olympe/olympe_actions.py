@@ -3,7 +3,7 @@ import threading
 from olympe.messages.ardrone3.Piloting import Landing, TakeOff
 from olympe.messages import gimbal
 
-from robobase import Action
+from robochan import Action
 from roboimpl.utils import logger
 from .olympe_env import OlympeEnv
 

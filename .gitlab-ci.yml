@@ -12,7 +12,7 @@ workflow:
   - when: never
 
 before_script:
-  - pip install -r requirements-base.txt
+  - pip install -r requirements-core.txt
   - export PYTHONPATH="$PYTHONPATH:$(pwd)"
 
 linters:
@@ -25,7 +25,7 @@ unit_tests:
   script:
     - apt-get update
     - pip install pytest
-    - pytest test/robobase/unit test/roboimpl/unit
+    - pytest test/robochan/unit test/roboimpl/unit
 
 e2e_tests:
   script:

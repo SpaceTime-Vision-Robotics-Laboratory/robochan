@@ -1,7 +1,7 @@
 """generic utils file"""
 from pathlib import Path
 from loggez import make_logger
-from robobase.utils import logger as base_logger
+from robochan.utils import logger as base_logger
 
 _LOG_FILE = None
 if base_logger.get_file_handler() is not None:
