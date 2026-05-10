@@ -3,27 +3,43 @@
 Robotics communication library between common robotics parts: environment (real or simulated), robot perception modules and robot actuators. The library is built in a generic way, and it can be used for pure Reinforcement Learning applications as well (i.e. we wrap `GymEnv` natively), as well as interacting with real world SDKs (i.e. parrot) or simulated environments (i.e. olympe/unreal).
 
 ```
-┌─────────────┐     ┌─────────────────┐     ┌─────────────┐     ┌───────────────┐     ┌──────────────┐
-│ Environment │────▶│ DataProducer(s) │────▶│ DataChannel │────▶│ Controller(s) │────▶│ ActionsQueue │
-│  (sensors)  │     │  (algos, nns)   │     │ (last-value)│     │   (decide)    │     │   (buffer)   │
-└─────────────┘     └─────────────────┘     └─────────────┘     └───────────────┘     └──────────────┘
-       ▲                                                                                       │
-       │                                Actions2Environment                                    │
-       └───────────────────────────────────(execute)───────────────────────────────────────────┘
+┌─────────────┐    ┌─────────────────┐    ┌─────────────┐    ┌───────────────┐    ┌──────────────┐
+│ Environment │───▶│ DataProducer(s) │───▶│ DataChannel │───▶│ Controller(s) │───▶│ ActionsQueue │
+│  (sensors)  │    │  (algos, nns)   │    │ (last-value)│    │   (decide)    │    │   (buffer)   │
+└─────────────┘    └─────────────────┘    └─────────────┘    └───────────────┘    └──────────────┘
+       ▲                                                                                  │
+       │                                Actions2Environment                               │
+       └───────────────────────────────────(execute)──────────────────────────────────────┘
 ```
 
 The library is built around 2 modules:
 - `robochan` Generic primitives for thread-safe, concurrent and hopefully performant communication
 - `roboimpl` Environment and robots specific implementations (e.g. `olympe-parrot`, `gym`, `ffmpeg`, `robosim` etc.)
 
-## Installation and testing
+## Installation
 
+### From PyPI (users)
+
+```bash
+pip install robochan                # core only — ships both `robochan` and `roboimpl`
+pip install 'robochan[yolo]'        # + torch, ultralytics, opencv (object detection)
+pip install 'robochan[vre]'         # + video-representations-extractor (semantic seg, depth, etc.)
+pip install 'robochan[gym]'         # + gymnasium
+pip install 'robochan[olympe]'      # + parrot-olympe (Parrot drones)
+pip install 'robochan[sdl2]'        # + pysdl2 (hardware-accelerated screen displayer)
+pip install 'robochan[vendor]'      # all of the above
 ```
-python -m venv .venv # python 3.11 or above
-source .venv/bin/activate
-pip install -r requirements-core.txt # only the `robochan` stuff
+
+The core install includes `roboimpl` too — and several pieces work with just core deps: `UDPController`, `KeyboardController`, and `ScreenDisplayer(backend="tkinter")`. The default ScreenDisplayer backend is `sdl2`, so on a core-only install either pass `backend="tkinter"` or set `ROBOIMPL_SCREEN_DISPLAYER_BACKEND=tkinter`.
+
+### From source (development)
+
+```bash
+git clone <repo-url> && cd robochan
+python -m venv .venv && source .venv/bin/activate    # python 3.10+
+pip install -e .                                      # core only
 pytest test/robochan
-pip install -r requirements-vendor.txt # all the environments supported in `robobimpl` like olympe from parrot or gym
+pip install -e '.[vendor]'                            # all extras for roboimpl
 pytest test/roboimpl
 bash test/e2e/run_all.sh
 ```
@@ -90,25 +106,25 @@ The two 'core' components of any robotics application are: the *data channel* an
 
 The usual flow is like this:
 ```
-┌─────────────┐     ┌──────────────────────────────────────────────────────────────────────┐
-│ Environment │────▶│                   DataProducers2Channels (topo-DAG)                  ├────────┐
-│   (robot)   │     │                                                                      │        │
-└─────────────┘     │   ┌───────┐    ┌──────────┐    ┌───────┐    ┌─────────┐              │        │
-       ▲            │   │  raw  │───▶│ semantic │───▶│ depth │───▶│ normals │              │        │
-       │            │   └───┬───┘    └──────────┘    └───────┘    └─────────┘              │        │
-       │            │       │                                                              │        │
-       │            │       │        ┌──────┐                                              │        ▼
-       │            │       └───────▶│ pose │                                              │  ┌──────────────┐
-       │            │                └──────┘                                              │  │ DataChannel  │
-       │            └──────────────────────────────────────────────────────────────────────┘  │ (last-value) │
-       │                                                                                      └──────────────┘
-       │                                 ┌────────────────────────────────────────────┐         │
-       │                                 │              Controllers                   │         |
-       │         ┌──────────────┐        │ ┌─────────┐ ┌─────────┐ ┌────────────┐     │         |
-       └─────────┤ ActionsQueue │◀───────┤ │ Ctrl 1  │ │ Ctrl 2  │ │  Ctrl N    │     │◀────────┘
-                 │ LIFT,MOVE... │        │ │(display)│ │(planner)│ │  (safety)  │     │
-                 └──────────────┘        │ └─────────┘ └─────────┘ └────────────┘     │
-          Actions2Environment (action_fn)└────────────────────────────────────────────┘
+┌─────────────┐     ┌────────────────────────────────────────────────────────────┐
+│ Environment │────▶│             DataProducers2Channels (topo-DAG)              ├─────────┐
+│   (robot)   │     │                                                            │         │
+└─────────────┘     │   ┌───────┐    ┌──────────┐    ┌───────┐    ┌─────────┐    │         │
+       ▲            │   │  raw  │───▶│ semantic │───▶│ depth │───▶│ normals │    │         │
+       │            │   └───┬───┘    └──────────┘    └───────┘    └─────────┘    │         │
+       │            │       │                                                    │         │
+       │            │       │        ┌──────┐                                    │         ▼
+       │            │       └───────▶│ pose │                                    │  ┌──────────────┐
+       │            │                └──────┘                                    │  │ DataChannel  │
+       │            └────────────────────────────────────────────────────────────┘  │ (last-value) │
+       │                                                                            └──────────────┘
+       │                             ┌────────────────────────────────────────────┐        │
+       │                             │                Controllers                 │        |
+       │      ┌──────────────┐       │   ┌─────────┐ ┌─────────┐ ┌────────────┐   │        |
+       └──────┤ ActionsQueue │◀──────┤   │ Ctrl 1  │ │ Ctrl 2  │ │  Ctrl N    │   │◀───────┘
+              │ LIFT,MOVE... │       │   │(display)│ │(planner)│ │  (safety)  │   │
+              └──────────────┘       │   └─────────┘ └─────────┘ └────────────┘   │
+      Actions2Environment (action_fn)└────────────────────────────────────────────┘
 ```
 
 

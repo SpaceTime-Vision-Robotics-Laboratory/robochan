@@ -3,7 +3,7 @@ from pathlib import Path
 from setuptools import setup, find_packages
 
 NAME = "robochan"
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 DESCRIPTION = ("Robochan: middleware for interfacing between generic algorithms (controllers) and robotic platforms and"
                " environments (parrot, gym, robosim etc.)")
 URL = "https://gitlab.com/video-representations-extractor/robochan"
