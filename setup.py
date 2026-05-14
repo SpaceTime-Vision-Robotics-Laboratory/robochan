@@ -44,4 +44,3 @@ setup(
     python_requires=">=3.10",
     scripts=[], # cli/xxx in the future
 )
-
