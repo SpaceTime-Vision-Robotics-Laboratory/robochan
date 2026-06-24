@@ -58,7 +58,7 @@ class ScreenDisplayer(BaseController):
 
         while self.data_channel.has_data():
             self.backend.poll_events() # need to call this to also update the frames
-            logger.log_every_s(f"FPS: {len(fpss) / (sum(fpss.get()) + 1e-5):.2f}", "INFO")
+            logger.log_every_s(f"FPS: {len(fpss) / (sum(fpss.get()) + 1e-5):.2f}", "DEBUG")
             new_state = DisplayerState(resolution=self.backend.get_current_size(), hud=False)
 
             ui_event = new_state != old_state # UI events i.e. resize or toggle info
